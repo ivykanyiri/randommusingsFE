@@ -55,7 +55,7 @@ function Home() {
           <h2 class="text-center">
             Hello <strong>{appState.user.username}</strong>, your feed is empty.
           </h2>
-          <p class="text-muted text-center">The feed on your screen showcases the most recent posts from individuals you are following. To discover content from people who share similar interests, utilize the "Search" function located in the top menu bar. Once you find relevant content, you have the option to follow those individuals and stay updated with their future posts.</p>
+          <p class="text-muted text-center">The feed on your screen showcases the most recent posts from individuals you are following. To discover content from people who share similar interests, utilize the "Search" function located in the top menu bar. Once you find relevant content, you have the option to follow those individuals and stay up to date with their future posts.</p>
         </>
       )}
     </Page>
