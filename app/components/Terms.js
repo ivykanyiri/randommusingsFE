@@ -5,7 +5,7 @@ function Terms() {
   return (
     <Page title="Terms and Conditions">
       <h2>Our Terms &amp; Conditions</h2>
-      <p className="lead text-muted">By using Random Musings, a website dedicated to sharing random thoughts about everyday experiences, you automatically agree to the Terms and Conditions outlined here. These Terms govern your access to and use of the services and information provided on the site. It is important to carefully read and understand these Terms, as well as the Privacy Policy, as your agreement to them is implied when you visit, view, access, or use any content or services on the site. </p>
+      <p className="text-muted">By using Random Musings, a website dedicated to sharing random thoughts about everyday experiences, you automatically agree to the Terms and Conditions outlined here. These Terms govern your access to and use of the services and information provided on the site. It is important to carefully read and understand these Terms, as well as the Privacy Policy, as your agreement to them is implied when you visit, view, access, or use any content or services on the site. </p>
       <h3>Details</h3>
       <ul className="text-muted">
         <li>In order to access specific functionalities of the Website/App, you are required to create an account and furnish personal information such as your chosen username, email address, and password. It is strictly prohibited to impersonate another individual or provide account details or an email address that does not belong to you. Your account must not be utilized for any unlawful or unauthorized activities.</li>

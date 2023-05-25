@@ -10,11 +10,15 @@ Axios.defaults.baseURL = process.env.BACKENDURL || "https://randommusings.onrend
 import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
 
+
+// Components
 import Header from "./components/Header";
 import HomeGuest from "./components/HomeGuest";
 import Home from "./components/Home";
 import About from "./components/About";
 import Terms from "./components/Terms";
+import Contact  from "./components/Contact";
+
 import Footer from "./components/Footer";
 const CreatePost = React.lazy(() => import("./components/CreatePost"));
 const ViewPost = React.lazy(() => import("./components/ViewPost"));
@@ -123,6 +127,8 @@ function Main() {
               <Route path="/profile/:username/*" element={<Profile />} />
               <Route path="/about-us" element={<About />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/contact" element={<Contact />} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

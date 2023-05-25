@@ -8,7 +8,10 @@ function Footer() {
       <p className='footer-links'>
         <Link to="/" className="mx-1">Home</Link> | 
         <Link className="mx-1" to="/about-us">About Us</Link> | 
-        <Link className="mx-1" to="/terms">Terms of Service</Link></p>
+        <Link className="mx-1" to="/terms">Terms of Service</Link>|
+        <Link className="mx-1" to="/contact">Contact Us</Link>
+        
+        </p>
       <p className="m-0">Copyright &copy; {new Date().getFullYear()} <Link to="/" className="text-muted">Random Musings</Link>. All rights reserved.</p>
     </footer>
   )
