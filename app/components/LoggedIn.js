@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
 // import { Tooltip } from "react-tooltip";
 
 function LoggedIn() {
+  const navigate = useNavigate()
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
   const handleLogout = () => {
     appDispatch({ type: "logout" });
     appDispatch({type: "flashMessage", value: "Signed out."})
+    navigate('/')
 
   };
 
