@@ -38,7 +38,7 @@ function Chat() {
         draft.chatMessages.push(message);
       });
     });
-    return () => socket.current.disconnect();
+    return () => socket.current.disconnect(); 
   }, []);
 
   useEffect(() => {
@@ -53,6 +53,7 @@ function Chat() {
     // send message to chat server
     socket.current.emit("chatFromBrowser", { message: state.chatValue, token: appState.user.token });
 
+    // push the message(s) to the chat log
     setState((draft) => {
       draft.chatMessages.push({ message: draft.chatValue, username: appState.user.username, avatar: appState.user.avatar });
       draft.chatValue = "";
