@@ -143,8 +143,6 @@ function Profile() {
         </NavLink>
       </div>
 
-      
-
       <Routes>
         <Route path= "" element={<Posts/>}/>
         <Route path= "followers" element={<Followers/>}/>

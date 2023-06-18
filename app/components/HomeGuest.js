@@ -4,6 +4,7 @@ import Axios from "axios";
 import { useImmerReducer } from "use-immer";
 import { CSSTransition } from "react-transition-group";
 import DispatchContext from "../DispatchContext";
+import LoadingDotsIcon from "./LoadingDotsIcon";
 
 function HomeGuest() {
   const appDispatch = useContext(DispatchContext);
@@ -29,6 +30,7 @@ function HomeGuest() {
       errorMessage: "",
     },
     submitCount: 0,
+    isRegistering: false
   };
 
   const ourReducer = (draft, action) => {
@@ -103,11 +105,20 @@ function HomeGuest() {
           draft.password.errorMessage = "Password must be atleast 12 characters.";
         }
         return;
+      case "registeringAccount":
+        draft.isRegistering = true;
+        return;
+      case "accountRegistered":
+        if (!draft.username.hasErrors && draft.username.isUnique && !draft.email.hasErrors && draft.email.isUnique && !draft.password.hasErrors) {
+          draft.isRegistering = false;
+        }
+        return;
       case "submitForm":
         if (!draft.username.hasErrors && draft.username.isUnique && !draft.email.hasErrors && draft.email.isUnique && !draft.password.hasErrors) {
           draft.submitCount++;
         }
         return;
+      
     }
   };
 
@@ -174,10 +185,12 @@ function HomeGuest() {
 
   useEffect(() => {
     if (state.submitCount) {
+      dispatch({type:"registeringAccount"})
       const ourRequest = Axios.CancelToken.source();
       const fetchResults = async () => {
         try {
           const response = await Axios.post("/register", { username: state.username.value, email: state.email.value, password: state.password.value }, { cancelToken: ourRequest.token });
+          dispatch({type: "accountRegistered"})
           appDispatch({ type: "login", data: response.data });
           appDispatch({ type: "flashMessage", value: "Successfully created account. Welcome!" });
         } catch (error) {
@@ -199,6 +212,8 @@ function HomeGuest() {
     dispatch({ type: "passwordAfterDelay", value: state.password.value });
     dispatch({ type: "submitForm" });
   };
+
+  
 
   return (
     <Page title="Welcome" wide={true}>
@@ -236,7 +251,7 @@ function HomeGuest() {
                 <div className="alert alert-danger small liveValidateMessage">{state.password.errorMessage}</div>
               </CSSTransition>
             </div>
-            <button type="submit" className="signup-btn py-3 mt-4 btn btn-lg btn-block">
+            <button disabled={state.isRegistering} type="submit" className="signup-btn py-3 mt-4 btn btn-lg btn-block">
               Sign up 
             </button>
           </form>

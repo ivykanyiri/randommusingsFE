@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { useImmerReducer } from "use-immer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Axios from "axios";
-import { CSSTransition } from "react-transition-group";
+import {CSSTransition}  from "react-transition-group";
 
 Axios.defaults.baseURL = process.env.BACKENDURL || "https://randommusings.onrender.com";
 
@@ -91,7 +91,7 @@ function Main() {
     }
   }, [state.loggedIn]);
 
-  // check if token has expired on first render
+  // check if token has expired on first ren der
   useEffect(() => {
     if (state.loggedIn) {
       const ourRequest = Axios.CancelToken.source();
@@ -115,7 +115,7 @@ function Main() {
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
-          <FlashMessage messages={state.flashMessages} />
+          <FlashMessage  />
           <Header />
           <Suspense fallback={<LoadingDotsIcon />}>
             <Routes>

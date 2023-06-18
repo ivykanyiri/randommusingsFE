@@ -6,7 +6,10 @@ import StateContext from "../StateContext";
 
 const Header = ({ loggedIn, staticEmpty }) => {
   const appState = useContext(StateContext);
+
+
   const headerContent = appState.loggedIn ? <LoggedIn /> : <LoggedOut />;
+
 
   return (
     <header className="header-bar mb-3">
@@ -15,6 +18,7 @@ const Header = ({ loggedIn, staticEmpty }) => {
           <Link to="/" className="header-logo">
             Random Musings
           </Link>
+          
         </h4>
         {!staticEmpty ? headerContent : ""}
       </div>

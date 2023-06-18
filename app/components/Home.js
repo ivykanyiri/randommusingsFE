@@ -43,7 +43,7 @@ function Home() {
       {state.feed.length > 0 && (
         <>
           <h2 className="text-center mb-4">Your Feed</h2>
-          <div className="list-group">
+          <div className="list-group mb-4">
             {state.feed.map((post) => {
               return <Post post={post} key={post._id} />;
             })}

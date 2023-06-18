@@ -9,6 +9,7 @@ function LoggedOut() {
 
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
+  const [saving, setSaving] =useState(true)
 
 
 
@@ -25,7 +26,7 @@ function LoggedOut() {
         appDispatch({type: "flashMessage", value: "Invalid username/password"})
       }
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     }
   }
 

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Page from "./Page";
 import Axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
 
@@ -10,6 +10,7 @@ function CreatePost() {
 
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
+  const [isSaving, setIsSaving] = useState(false)
 
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
@@ -17,18 +18,18 @@ function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsSaving(true)
       const response = await Axios.post("/create-post", { title, body, token: appState.user.token });
-
       console.log(response.data);
 
-      // Display a flashmessage when the no content is submitted
-
       if (response.data) {
+        setIsSaving(false)
         // redirect to new post URL
-        appDispatch({ type: "flashMessage", value: "New post successfully created!" });
+        appDispatch({ type: "flashMessage", value: "New post created!" });
         navigate(`/post/${response.data}`);
         // console.log("New post created")
       } else {
+        // Display a flashmessage when the no content is submitted
         appDispatch({type: "flashMessage", value:"Please provide content for the title and body"})
       }
     } catch (error) {
@@ -53,7 +54,7 @@ function CreatePost() {
           <textarea onChange={(e) => setBody(e.target.value)} name="body" id="post-body" className="body-content tall-textarea form-control" type="text"></textarea>
         </div>
 
-        <button className="btn save-btn">Save New Post</button>
+        <button disabled={isSaving} className="btn save-btn">Save New Post</button>
       </form>
     </Page>
   );

@@ -4,7 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import LoadingDotsIcon from "./LoadingDotsIcon";
 import ReactMarkdown from "react-markdown";
-// import { Tooltip } from "react-tooltip";
+// import  {Tooltip}  from "react-tooltip";
 import NotFound from "./NotFound";
 import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
@@ -64,7 +64,7 @@ function ViewPost() {
         const response = await Axios.delete(`/post/${id}`, { data: { token: appState.user.token } });
         if (response.data == "Success") {
           // display flash message and redirect to user's profile
-          appDispatch({ type: "flashMessage", value: "Post was successfully deleted" });
+          appDispatch({ type: "flashMessage", value: "Post was deleted" });
           navigate(`/profile/${appState.user.username}`);
         }
       } catch (error) {
@@ -80,8 +80,8 @@ function ViewPost() {
         {isOwner() && (
           <span className="pt-2">
             <Link data-tooltip-id="edit" data-tooltip-content="Edit" to={`/post/${post._id}/edit`} className="text-primary mr-2" title="Edit">
-              <i className="fas fa-edit"></i>
-            </Link>
+              <i className="fas fa-edit"></i> 
+            </Link> {" "}
             {/* <Tooltip id="edit" className="custom-tooltip" /> */}
             <a onClick={deleteHandler} className="delete-post-button text-danger" title="Delete">
               <i className="fas fa-trash"></i>

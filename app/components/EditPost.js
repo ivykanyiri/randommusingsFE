@@ -51,7 +51,6 @@ function EditPost() {
         if (!draft.title.hasError && !draft.body.hasError) {
           draft.sendCount++;
         }
-
         return;
       case "saveRequestStarted":
         draft.isSaving = true;
@@ -93,6 +92,7 @@ function EditPost() {
       try {
         const response = await Axios.get(`/post/${state.id}`, { cancelToken: ourRequest.token });
         if (response.data) {
+          console.log(response.data)
           dispatch({ type: "fetchComplete", value: response.data });
           if (appState.user.username !== response.data.author.username) {
             appDispatch({ type: "flashMessage", value: "You don't have permission to edit this post" });
@@ -116,7 +116,7 @@ function EditPost() {
       dispatch({ type: "saveRequestStarted" });
       const ourRequest = Axios.CancelToken.source();
 
-      const fetchPost = async () => {
+      const sendPost = async () => {
         try {
           const response = await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { cancelToken: ourRequest.token });
           dispatch({ type: "saveRequestFinished" });
@@ -127,7 +127,7 @@ function EditPost() {
           console.log(error.message);
         }
       };
-      fetchPost();
+      sendPost();
       return () => {
         ourRequest.cancel();
       };
@@ -140,7 +140,7 @@ function EditPost() {
 
   if (state.isFetching)
     return (
-      <Page title="">
+      <Page title="...">
         <LoadingDotsIcon />
       </Page>
     );
@@ -167,7 +167,6 @@ function EditPost() {
           <textarea onBlur={(e) => dispatch({ type: "bodyRules", value: e.target.value })} onChange={(e) => dispatch({ type: "bodyChange", value: e.target.value })} value={state.body.value} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" />
           {state.body.hasError && <div className="alert alert-danger small liveValidateMessage">{state.body.errMessage}</div>}
         </div>
-
         <button className="btn save-btn" disabled={state.isSaving}>
           Save Updates
         </button>
