@@ -25,9 +25,9 @@ function LoggedIn() {
     <div className="flex-row my-3 my-md-0">
       
       {/* <Tooltip place="bottom" id="search" className="custom-tooltip" /> */}{" "}
-      <span onClick={() => appDispatch({ type: "toggleChat" })} className={"mr-2 header-chat-icon " + (appState.unreadChatCount ? "text-danger" : "chat-icon")}>
+      <span onClick={() => appDispatch({ type: "toggleChat" })} className={"mr-2 header-chat-icon " + (appState.unreadChatCount ? "text-danger" : "chat-icon")} title="Send Message">
         <i className="fas fa-comment"></i>
-        {appState.unreadChatCount ? <span className="chat-count-badge text-white"> {appState.unreadChatCount < 10 ? appState.unreadChatCount: '9+'}</span> : ""}
+        {appState.unreadChatCount ? <span className="chat-count-badge text-white"> {appState.unreadChatCount < 100 ? appState.unreadChatCount: '99+'}</span> : ""}
       </span>{" "}
       
       <Link className="create-post-btn btn btn-sm" to="/create-post">
@@ -36,11 +36,11 @@ function LoggedIn() {
       <button onClick={handleLogout} className=" signout-btn btn btn-sm">
         Sign Out
       </button>{" "}
-      <a data-tooltip-id="search" data-tooltip-content="Search" onClick={handleSearchIcon} href="#" className="mr-2 header-search-icon">
+      <a data-tooltip-id="search" data-tooltip-content="Search" onClick={handleSearchIcon} href="#" className="mr-2 header-search-icon" title="Search">
         <i className="fas fa-search"></i>
       </a>{" "}
       <Link to={`/profile/${appState.user.username}`} className="mr-2">
-        <img className="small-header-avatar" src={appState.user.avatar} />
+        <img className="small-header-avatar" src={appState.user.avatar} title="Profile" />
       </Link>
     </div>
   );

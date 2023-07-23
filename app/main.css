@@ -75,6 +75,31 @@ a:hover{
   transition: 0.5s;
 }
 
+.pass-input{
+  position: relative;
+}
+
+.pass-btn{
+  position: absolute;
+  top: 30px;
+  right:5px;
+  z-index: 1000;
+  padding: 3px;
+  background-color: transparent;
+  color: grey;
+  font-size: .8rem;
+}
+.loginpass-btn{
+  color: grey;
+  position: absolute;
+  top: 5px;
+  right:20px;
+  z-index: 1000;
+  padding: 0;
+  background-color: transparent;
+  font-size: .8rem;
+}
+
 .signup-btn:hover {
   background-color: var(--secondary-color);
 }
@@ -410,20 +435,20 @@ textarea.tall-textarea {
   position: fixed;
   z-index: 5;
   bottom: 0;
-  right: 20px;
+  right: 0;
   width: 290px;
   height: 350px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transform: translateY(100%);
+  transform: translateX(100%);
   transition: 0.33s opacity ease-in-out, 0.33s transform ease-in-out;
 }
 
 .chat-wrapper--is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .chat-title-bar {
@@ -612,7 +637,7 @@ textarea.tall-textarea {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #c4c4c4;
+  background-color: #b4b3b3;
   opacity: 0;
 }
 

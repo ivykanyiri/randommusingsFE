@@ -3,11 +3,16 @@ import Page from "./Page";
 import Axios from "axios";
 import { useImmerReducer } from "use-immer";
 import { CSSTransition } from "react-transition-group";
+import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
 import LoadingDotsIcon from "./LoadingDotsIcon";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function HomeGuest() {
   const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
+
+  const [togglePassword, setTogglePassword] = useState(false)
 
   const initialState = {
     username: {
@@ -29,8 +34,8 @@ function HomeGuest() {
       hasErrors: false,
       errorMessage: "",
     },
+    showPassword: false,
     submitCount: 0,
-    isRegistering: false
   };
 
   const ourReducer = (draft, action) => {
@@ -89,7 +94,6 @@ function HomeGuest() {
         } else {
           draft.email.isUnique = true;
         }
-
         return;
       case "passwordImmediately":
         draft.password.hasErrors = false;
@@ -105,20 +109,11 @@ function HomeGuest() {
           draft.password.errorMessage = "Password must be atleast 12 characters.";
         }
         return;
-      case "registeringAccount":
-        draft.isRegistering = true;
-        return;
-      case "accountRegistered":
-        if (!draft.username.hasErrors && draft.username.isUnique && !draft.email.hasErrors && draft.email.isUnique && !draft.password.hasErrors) {
-          draft.isRegistering = false;
-        }
-        return;
       case "submitForm":
         if (!draft.username.hasErrors && draft.username.isUnique && !draft.email.hasErrors && draft.email.isUnique && !draft.password.hasErrors) {
           draft.submitCount++;
         }
         return;
-      
     }
   };
 
@@ -185,12 +180,12 @@ function HomeGuest() {
 
   useEffect(() => {
     if (state.submitCount) {
-      dispatch({type:"registeringAccount"})
+      appDispatch({ type: "saveRequestStarted" });
       const ourRequest = Axios.CancelToken.source();
       const fetchResults = async () => {
         try {
           const response = await Axios.post("/register", { username: state.username.value, email: state.email.value, password: state.password.value }, { cancelToken: ourRequest.token });
-          dispatch({type: "accountRegistered"})
+          appDispatch({ type: "saveRequestFinished" });
           appDispatch({ type: "login", data: response.data });
           appDispatch({ type: "flashMessage", value: "Successfully created account. Welcome!" });
         } catch (error) {
@@ -202,6 +197,10 @@ function HomeGuest() {
     }
   }, [state.submitCount]);
 
+  const togglePasswordVisibility = () => {
+    setTogglePassword(!togglePassword)
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: "usernameImmediately", value: state.username.value });
@@ -212,8 +211,6 @@ function HomeGuest() {
     dispatch({ type: "passwordAfterDelay", value: state.password.value });
     dispatch({ type: "submitForm" });
   };
-
-  
 
   return (
     <Page title="Welcome" wide={true}>
@@ -238,6 +235,7 @@ function HomeGuest() {
                 <small>Email</small>
               </label>
               <input onChange={(e) => dispatch({ type: "emailImmediately", value: e.target.value })} id="email-register" name="email" className="form-control" type="text" placeholder="you@example.com" autoComplete="off" />
+
               <CSSTransition in={state.email.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                 <div className="alert alert-danger small liveValidateMessage">{state.email.errorMessage}</div>
               </CSSTransition>
@@ -246,13 +244,17 @@ function HomeGuest() {
               <label htmlFor="password-register" className="text-muted mb-1">
                 <small>Password</small>
               </label>
-              <input onChange={(e) => dispatch({ type: "passwordImmediately", value: e.target.value })} id="password-register" name="password" className="form-control" type="password" placeholder="Create a password" />
+              <input type={togglePassword ? "text" : "password"} onChange={(e) => dispatch({ type: "passwordImmediately", value: e.target.value })} id="password-register" name="password" className="form-control pass-input" placeholder="Create a password" />
+              <button type="button" className="btn pass-btn" onClick={togglePasswordVisibility}>
+                {togglePassword ? <FaEyeSlash /> : <FaEye />}{" "}
+              </button>
+
               <CSSTransition in={state.password.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                 <div className="alert alert-danger small liveValidateMessage">{state.password.errorMessage}</div>
               </CSSTransition>
             </div>
-            <button disabled={state.isRegistering} type="submit" className="signup-btn py-3 mt-4 btn btn-lg btn-block">
-              Sign up 
+            <button disabled={appState.isSaving} type="submit" className="signup-btn py-3 mt-4 btn btn-lg btn-block">
+              Sign up
             </button>
           </form>
         </div>

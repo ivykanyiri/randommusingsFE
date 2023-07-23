@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useRef } from "react";
 import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
 import { useImmer } from "use-immer";
+import { Link } from "react-router-dom"; 
 import io from "socket.io-client";
-import { Link } from "react-router-dom";
 
 function Chat() {
   const socket = useRef(null);
@@ -50,7 +50,7 @@ function Chat() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // send message to chat server
+    // send message to chat server, open up two-way socket connection using socket.io
     socket.current.emit("chatFromBrowser", { message: state.chatValue, token: appState.user.token });
 
     // push the message(s) to the chat log

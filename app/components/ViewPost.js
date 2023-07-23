@@ -54,7 +54,7 @@ function ViewPost() {
     if (appState.loggedIn) {
       return appState.user.username == post.author.username;
     }
-    false;
+    return false;
   };
 
   const deleteHandler = async () => {

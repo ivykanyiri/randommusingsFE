@@ -101,7 +101,7 @@ function Search() {
                 })}
               </div>
             )}
-            {Boolean(!state.results.length) && <p className="alert alert-danger text-center shadow-sm">Sorry, we could not find any results.</p>}
+            {Boolean(!state.results.length) && <p className="alert alert-danger text-center shadow-sm">Sorry, we could not find any matching results.</p>}
           </div>
         </div>
       </div>

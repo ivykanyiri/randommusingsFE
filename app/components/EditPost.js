@@ -39,11 +39,11 @@ function EditPost() {
         draft.body.value = action.value.body;
         draft.isFetching = false;
         return;
-      case "titleChange":
+      case "titleEdits":
         draft.title.hasError = false;
         draft.title.value = action.value;
         return;
-      case "bodyChange":
+      case "bodyEdits":
         draft.body.hasError = false;
         draft.body.value = action.value;
         return;
@@ -51,12 +51,6 @@ function EditPost() {
         if (!draft.title.hasError && !draft.body.hasError) {
           draft.sendCount++;
         }
-        return;
-      case "saveRequestStarted":
-        draft.isSaving = true;
-        return;
-      case "saveRequestFinished":
-        draft.isSaving = false;
         return;
       case "titleRules":
         if (!action.value.trim()) {
@@ -113,13 +107,13 @@ function EditPost() {
 
   useEffect(() => {
     if (state.sendCount) {
-      dispatch({ type: "saveRequestStarted" });
+      appDispatch({ type: "saveRequestStarted" });
       const ourRequest = Axios.CancelToken.source();
 
       const sendPost = async () => {
         try {
           const response = await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { cancelToken: ourRequest.token });
-          dispatch({ type: "saveRequestFinished" });
+          appDispatch({ type: "saveRequestFinished" });
           appDispatch({ type: "flashMessage", value: "Post was updated." });
           navigate(`/post/${state.id}`);
 
@@ -156,7 +150,7 @@ function EditPost() {
           <label htmlFor="post-title" className="text-muted mb-1">
             <small>Title</small>
           </label>
-          <input onBlur={(e) => dispatch({ type: "titleRules", value: e.target.value })} onChange={(e) => dispatch({ type: "titleChange", value: e.target.value })} value={state.title.value} autoFocus name="title" id="post-title" className="form-control form-control-lg form-control-title" type="text" placeholder="" autoComplete="off" />
+          <input onBlur={(e) => dispatch({ type: "titleRules", value: e.target.value })} onChange={(e) => dispatch({ type: "titleEdits", value: e.target.value })} value={state.title.value} autoFocus name="title" id="post-title" className="form-control form-control-lg form-control-title" type="text" placeholder="" autoComplete="off" />
           {state.title.hasError && <div className="alert alert-danger small liveValidateMessage">{state.title.errMessage}</div>}
         </div>
 
@@ -164,10 +158,10 @@ function EditPost() {
           <label htmlFor="post-body" className="text-muted mb-1 d-block">
             <small>Body Content</small>
           </label>
-          <textarea onBlur={(e) => dispatch({ type: "bodyRules", value: e.target.value })} onChange={(e) => dispatch({ type: "bodyChange", value: e.target.value })} value={state.body.value} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" />
+          <textarea onBlur={(e) => dispatch({ type: "bodyRules", value: e.target.value })} onChange={(e) => dispatch({ type: "bodyEdits", value: e.target.value })} value={state.body.value} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" />
           {state.body.hasError && <div className="alert alert-danger small liveValidateMessage">{state.body.errMessage}</div>}
         </div>
-        <button className="btn save-btn" disabled={state.isSaving}>
+        <button className="btn save-btn" disabled={appState.isSaving}>
           Save Updates
         </button>
       </form>

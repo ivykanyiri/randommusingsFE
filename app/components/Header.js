@@ -16,7 +16,7 @@ const Header = ({ loggedIn, staticEmpty }) => {
       <div className="container d-flex flex-column flex-md-row align-items-center p-3">
         <h4 className="my-0 mr-md-auto font-weight-normal">
           <Link to="/" className="header-logo">
-            Random Musings
+            Random Musings...
           </Link>
           
         </h4>

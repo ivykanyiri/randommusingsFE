@@ -39,9 +39,11 @@ function Main() {
       username: localStorage.getItem("appUsername"),
       avatar: localStorage.getItem("appAvatar"),
     },
+    isSaving: false,
     isSearchOpen: false,
     isChatOpen: false,
     unreadChatCount: 0,
+    showPassword: false
   };
 
   const ourReducer = (draft, action) => {
@@ -56,6 +58,12 @@ function Main() {
       case "flashMessage":
         draft.flashMessages.push(action.value);
         return;
+      case "saveRequestStarted":
+        draft.isSaving = true;
+        return;
+      case "saveRequestFinished":
+        draft.isSaving = false;
+        return
       case "openSearch":
         draft.isSearchOpen = true;
         return;
@@ -74,6 +82,10 @@ function Main() {
       case "clearUnreadChatCount":
         draft.unreadChatCount = 0;
         return;
+      case "togglePasswordVisibility":
+        draft.showPassword = !draft.showPassword
+        return;
+
     }
   };
 
@@ -91,7 +103,7 @@ function Main() {
     }
   }, [state.loggedIn]);
 
-  // check if token has expired on first ren der
+  // check if token has expired on first render
   useEffect(() => {
     if (state.loggedIn) {
       const ourRequest = Axios.CancelToken.source();

@@ -10,7 +10,6 @@ function CreatePost() {
 
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
-  const [isSaving, setIsSaving] = useState(false)
 
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
@@ -18,12 +17,12 @@ function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsSaving(true)
+      appDispatch({type: "saveRequestStarted"})
       const response = await Axios.post("/create-post", { title, body, token: appState.user.token });
       console.log(response.data);
 
       if (response.data) {
-        setIsSaving(false)
+        appDispatch({type: "saveRequestFinished"})
         // redirect to new post URL
         appDispatch({ type: "flashMessage", value: "New post created!" });
         navigate(`/post/${response.data}`);
@@ -54,7 +53,7 @@ function CreatePost() {
           <textarea onChange={(e) => setBody(e.target.value)} name="body" id="post-body" className="body-content tall-textarea form-control" type="text"></textarea>
         </div>
 
-        <button disabled={isSaving} className="btn save-btn">Save New Post</button>
+        <button disabled={appState.isSaving} className="btn save-btn">Save New Post</button>
       </form>
     </Page>
   );
