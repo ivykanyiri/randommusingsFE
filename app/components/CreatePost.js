@@ -22,14 +22,15 @@ function CreatePost() {
       console.log(response.data);
 
       if (response.data) {
+        console.log(response.data)
         appDispatch({type: "saveRequestFinished"})
         // redirect to new post URL
-        appDispatch({ type: "flashMessage", value: "New post created!" });
+        appDispatch({ type: "flashMessage", value: {type: "success", message: "New post created!" }});
         navigate(`/post/${response.data}`);
         // console.log("New post created")
       } else {
         // Display a flashmessage when the no content is submitted
-        appDispatch({type: "flashMessage", value:"Please provide content for the title and body"})
+        appDispatch({type: "flashMessage", value:{type: "danger", message: "Please provide content for the title and body"}})
       }
     } catch (error) {
       console.log(error.message);

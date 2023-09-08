@@ -112,7 +112,7 @@ function Main() {
           const response = await Axios.post("/checkToken", { token: state.user.token }, { cancelToken: ourRequest.token });
           if (!response.data) {
             dispatch({ type: "logout" });
-            dispatch({ type: "flashMessage", value: "Your session has expired. Please log in again" });
+            dispatch({ type: "flashMessage", value: { type: "danger", message: "Your session has expired. Please log in again"}  });
           }
         } catch (error) {
           console.log(error.message);

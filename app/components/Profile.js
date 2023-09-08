@@ -6,7 +6,8 @@ import StateContext from "../StateContext";
 import Posts from "./Posts";
 import Followers from "./Followers";
 import Following from "./Following";
-import { useImmer, useImmerReducer } from "use-immer";
+import { useImmer } from "use-immer";
+import NotFound from "./NotFound";
 
 function Profile() {
   const appState = useContext(StateContext);
@@ -22,6 +23,7 @@ function Profile() {
       counts: { postCount: "", followerCount: "", followingCount: "" },
       isFollowing: false,
     },
+    notFound: false
   });
 
   useEffect(() => {
@@ -30,9 +32,20 @@ function Profile() {
     const fetchData = async () => {
       try {
         const response = await Axios.post(`/profile/${username}`, { token: appState.user.token }, { cancelToken: ourRequest.token });
-        setState((draft) => {
-          draft.profileData = response.data;
-        });
+        if(response.data){
+          console.log(response.data)
+          setState((draft) => {
+            draft.profileData = response.data;
+            
+          });
+          
+        } else{
+          console.log("Not found")
+          setState((draft) => {
+            draft.notFound = true
+          })
+        }
+        
       } catch (error) {
         console.log(error.message);
       }
@@ -43,6 +56,8 @@ function Profile() {
       ourRequest.cancel();
     };
   }, [username]);
+
+
 
   useEffect(() => {
     if (state.startFollowingRequestCount) {
@@ -112,6 +127,10 @@ function Profile() {
       draft.stopFollowingRequestCount++;
     });
   };
+
+  if (state.notFound) {
+    return <NotFound/>
+  }
 
   
 

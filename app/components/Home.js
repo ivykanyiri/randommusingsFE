@@ -39,10 +39,10 @@ function Home() {
     return <LoadingDotsIcon />;
   }
   return (
-    <Page title="Your Feed">
+    <Page title="Home">
       {state.feed.length > 0 && (
         <>
-          <h2 className="text-center mb-4">Your Feed</h2>
+          <h3 className="text-center mb-4">Home</h3>
           <div className="list-group mb-4">
             {state.feed.map((post) => {
               return <Post post={post} key={post._id} />;

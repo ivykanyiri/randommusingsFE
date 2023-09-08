@@ -1,6 +1,7 @@
 :root {
-  --primary-color: rgb(138, 43, 170);
-  --secondary-color: rgb(95, 11, 122);
+  --background-color: rgb(4, 4, 4);
+  --primary-color: rgb(27, 116, 146);
+  --secondary-color: rgb(41, 96, 121);
   --title-color: rgb(86, 83, 83);
 }
 
@@ -664,6 +665,10 @@ textarea.tall-textarea {
   animation: opacitychange 1s ease-in-out 0.66s infinite;
   -webkit-animation-fill-mode: infinite;
   animation-fill-mode: infinite;
+}
+
+.is-invalid {
+  border: 1px solid red;
 }
 
 @keyframes opacitychange {

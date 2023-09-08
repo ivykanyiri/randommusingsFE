@@ -11,7 +11,7 @@ function LoggedIn() {
 
   const handleLogout = () => {
     appDispatch({ type: "logout" });
-    appDispatch({type: "flashMessage", value: "Signed out."})
+    appDispatch({type: "flashMessage", value: {type: "success", message: "Signed out."}})
     navigate('/')
 
   };
@@ -31,7 +31,7 @@ function LoggedIn() {
       </span>{" "}
       
       <Link className="create-post-btn btn btn-sm" to="/create-post">
-        Create Post
+        New Post
       </Link>
       <button onClick={handleLogout} className=" signout-btn btn btn-sm">
         Sign Out

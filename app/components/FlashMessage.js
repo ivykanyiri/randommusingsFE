@@ -8,8 +8,8 @@ function FlashMessage() {
     <div className="floating-alerts">
       {appState.flashMessages.map((msg, index) => {
         return (
-          <div key={index} className="alert alert-success floating-alert text-center shadow-sm">
-            {msg}
+          <div key={index} className={`alert alert-${msg.type} floating-alert text-center shadow-sm`}>
+            {msg.message}
           </div>
         );
       })}

@@ -12,7 +12,7 @@ function HomeGuest() {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
-  const [togglePassword, setTogglePassword] = useState(false)
+  const [togglePassword, setTogglePassword] = useState(false);
 
   const initialState = {
     username: {
@@ -123,7 +123,7 @@ function HomeGuest() {
     if (state.username.value) {
       const delay = setTimeout(() => {
         dispatch({ type: "usernameAfterDelay" });
-      }, 900);
+      }, 2000);
       return () => clearTimeout(delay);
     }
   }, [state.username.value]);
@@ -132,7 +132,7 @@ function HomeGuest() {
     if (state.email.value) {
       const delay = setTimeout(() => {
         dispatch({ type: "emailAfterDelay" });
-      }, 1000);
+      }, 2000);
       return () => clearTimeout(delay);
     }
   }, [state.email.value]);
@@ -141,7 +141,7 @@ function HomeGuest() {
     if (state.password.value) {
       const delay = setTimeout(() => {
         dispatch({ type: "passwordAfterDelay" });
-      }, 1000);
+      }, 2000);
       return () => clearTimeout(delay);
     }
   }, [state.password.value]);
@@ -198,7 +198,7 @@ function HomeGuest() {
   }, [state.submitCount]);
 
   const togglePasswordVisibility = () => {
-    setTogglePassword(!togglePassword)
+    setTogglePassword(!togglePassword);
   };
 
   const handleSubmit = (e) => {
