@@ -8,8 +8,8 @@ function Post({post, onClick, hideAuthor}) {
   return (
     <Link onClick={onClick} to={`/post/${post._id}`} className="list-group-item list-group-item-action">
       <img className="avatar-tiny" src={post.author.avatar} /> <strong>{post.title}</strong> {""}
-      <span className="text-muted small">
-        {!hideAuthor && <>by {post.author.username}</>} on {dateFormatted}{" "}
+      <span className="text-muted small ">
+        {!hideAuthor && <>by <strong>{post.author.username}</strong></>} on {dateFormatted}{" "}
       </span>
     </Link>
   );
