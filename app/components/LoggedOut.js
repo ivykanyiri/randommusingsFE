@@ -32,6 +32,7 @@ function LoggedOut() {
       case "usernameVal":
         draft.username.hasError = false;
         draft.username.value = action.value;
+        return;
         
       case "passwordVal":
         draft.password.hasError = false;
@@ -50,6 +51,7 @@ function LoggedOut() {
         if (draft.username.value && draft.password.value) {
           draft.submitCount++;
         }
+        return;
     }
   };
 
