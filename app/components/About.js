@@ -1,4 +1,6 @@
 import Page from "./Page";
+import React from "react";
+
 
 function About() {
   return (
