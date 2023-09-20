@@ -3,8 +3,6 @@ import { useImmerReducer } from "use-immer";
 import Axios from "axios";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { CSSTransition } from "react-transition-group";
 
 function LoggedOut() {
   const appDispatch = useContext(DispatchContext);

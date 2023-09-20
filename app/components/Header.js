@@ -4,7 +4,7 @@ import LoggedOut from "./LoggedOut";
 import LoggedIn from "./LoggedIn";
 import StateContext from "../StateContext";
 
-const Header = ({ loggedIn, staticEmpty }) => {
+const Header = ({ staticEmpty }) => {
   const appState = useContext(StateContext);
 
 
